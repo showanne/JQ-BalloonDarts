@@ -64,8 +64,22 @@
       top: calc(50% - 150px);
       transform-origin: center;
       transform: rotate(30deg);
+      transition: transform 3.5s;
+    }
 
+    #circle-inside .balloon {
+      width: 70px;
+      height: 170px;
+      left: calc(50% - 35px);
+      /* background-color: rgba(0, 26, 255, 0.425); */
+      transform: rotate(19deg);
+      /* 不知為何小圓的0度不會對到外面的0度 */
+      /* js有寫旋轉 */
+    }
 
+    #circle .balloon-svg {
+      width: 60px;
+      height: 60px;
     }
 
     #straight {
@@ -132,14 +146,14 @@
     <!-- 10顆內隨機氣球 轉圓 -->
     <div id="circle" class="inline">
       <div id="circle-inside" class="">
-        <!-- <div class="balloon">
-            <svg class="balloon-svg" data-name="balloon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.54 377.24">
-              <path d="M285,118C273,50.4,212.82.58,143.91,0c-8.59.91-17.28,1.24-25.74,2.81C46.34,16.1-4.58,81.17.33,153.29Q4,207.42,42,245.77c29.16,29.5,58.62,58.72,88,88,9,9,18.54,8.94,27.53,0,29.34-29.32,59-58.35,87.92-88.08C280.18,210,293.69,167.17,285,118Z"
-                    fill="#ca8af8" />
-              <path d="M149.28,348.54c-3.3-4.32-6.84-4.38-10.12-.1-5,6.45-9.88,12.94-14.54,19.6-1.08,1.54-2,4.43-1.26,5.68.95,1.59,3.58,2.84,5.6,3,4.95.42,10,.14,14.94.14,5.15,0,10.32.27,15.44-.14,2-.16,4.6-1.41,5.59-3,.76-1.21,0-4.12-1.09-5.61C159.18,361.46,154.22,355,149.28,348.54Z"
-                    fill="#ca8af8" />
-            </svg>
-          </div> -->
+        <div class="balloon">
+          <svg class="balloon-svg" data-name="balloon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.54 377.24">
+            <path d="M285,118C273,50.4,212.82.58,143.91,0c-8.59.91-17.28,1.24-25.74,2.81C46.34,16.1-4.58,81.17.33,153.29Q4,207.42,42,245.77c29.16,29.5,58.62,58.72,88,88,9,9,18.54,8.94,27.53,0,29.34-29.32,59-58.35,87.92-88.08C280.18,210,293.69,167.17,285,118Z"
+                  fill="#ca8af8" />
+            <path d="M149.28,348.54c-3.3-4.32-6.84-4.38-10.12-.1-5,6.45-9.88,12.94-14.54,19.6-1.08,1.54-2,4.43-1.26,5.68.95,1.59,3.58,2.84,5.6,3,4.95.42,10,.14,14.94.14,5.15,0,10.32.27,15.44-.14,2-.16,4.6-1.41,5.59-3,.76-1.21,0-4.12-1.09-5.61C159.18,361.46,154.22,355,149.28,348.54Z"
+                  fill="#ca8af8" />
+          </svg>
+        </div>
       </div>
       <div class="balloon">
         <svg class="balloon-svg" data-name="balloon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.54 377.24">
@@ -196,15 +210,32 @@
     // console.log($('#circle .balloon'));
 
     // 為容器內加 氣球svg
-    for (i = 1; i < 10; i++) {
-      // 轉盤區
-      Balloon('#circle')
+    for (i = 1; i < 19; i++) {
+      // 從1開始是因為上面 html 已經有寫一個
 
-      $('#circle .balloon').eq(i).css('transform', `rotate(${i * 36}deg)`)
-      // console.log(i);
-      // console.log(`${i * 36}`);
-      // console.log($('#circle .balloon').eq(i));
+      if (i < 8) {
+        // 轉盤區 - 小圓
+        Balloon('#circle-inside')
+        $('#circle-inside .balloon').eq(i).css('transform', `rotate(${i * 45 + 19}deg)`)
+        // console.log(`${i * 40 + 19}`);
+      } else if (i > 9 || i < 19) {
+        // 轉盤區 - 大圓
+        Balloon('#circle')
+        $('#circle .balloon').eq(i).css('transform', `rotate(${i * 36}deg)`)
 
+        console.log(i);
+        // console.log(`${i * 36}`);
+        // console.log($('#circle .balloon').eq(i));
+      } else if (i === 8) {
+        $('#circle .balloon').eq(i).css()
+        console.log(i);
+        // 第8個氣球上面 html 已經有寫一個，js不想重複出現
+      }
+
+    }
+
+    // 為容器內加 氣球svg
+    for (i = 0; i < 10; i++) {
 
       // 直走區
       $('#straight .track svg').eq(i).css({
@@ -216,7 +247,14 @@
       )
       Balloon('#straight .track')
       // console.log($('#straight svg').length);
-      // console.log(`${random() * 30}`);
+
+      // 沒辦法新增每個 balloon 的 marginBottom --想要隨機間距
+      $('#straight .track .balloon').eq(i).css({ marginBottom: `${random}px` })
+      console.log($('#straight .track .balloon').eq(i));
+
+      $('#straight .track .balloon').eq(i).attr('data-svg', i)
+
+      console.log(`${random()}`);
 
 
       // 橫走區
@@ -230,6 +268,7 @@
       // console.log(`${random() * 45}`);
       // 直走區
       $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px` })
+
       // $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px`})
       // 橫走區
       // $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px`})
@@ -248,6 +287,8 @@
     // 轉盤隨機角度變換
     timer = setInterval(() => {
       $('#circle').attr('style', `transform:rotate(${random() * 36}deg)`)
+      $('#circle-inside').attr('style', `transform:rotate(${random() * (-36)}deg)`)
+
       // console.log(random * 36);
     }, 900)
 
@@ -299,6 +340,7 @@
 
     // fill="#5b5b5b"  svg顏色隨機
     // 轉圈使用 jqueryrotate 沒辦法轉完一整圈
+    // 大圈的第一個汽球為全部的第8個氣球，上面 html 已經有寫一個，js不想重複出現
 
   </script>
 </body>
