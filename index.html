@@ -155,15 +155,6 @@
           </svg>
         </div>
       </div>
-      <div class="balloon">
-        <svg class="balloon-svg" data-name="balloon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.54 377.24">
-          <path d="M285,118C273,50.4,212.82.58,143.91,0c-8.59.91-17.28,1.24-25.74,2.81C46.34,16.1-4.58,81.17.33,153.29Q4,207.42,42,245.77c29.16,29.5,58.62,58.72,88,88,9,9,18.54,8.94,27.53,0,29.34-29.32,59-58.35,87.92-88.08C280.18,210,293.69,167.17,285,118Z"
-                fill="#ca8af8" />
-          <path d="M149.28,348.54c-3.3-4.32-6.84-4.38-10.12-.1-5,6.45-9.88,12.94-14.54,19.6-1.08,1.54-2,4.43-1.26,5.68.95,1.59,3.58,2.84,5.6,3,4.95.42,10,.14,14.94.14,5.15,0,10.32.27,15.44-.14,2-.16,4.6-1.41,5.59-3,.76-1.21,0-4.12-1.09-5.61C159.18,361.46,154.22,355,149.28,348.54Z"
-                fill="#ca8af8" />
-        </svg>
-      </div>
-
     </div>
 
 
@@ -207,7 +198,6 @@
     }
     // console.log(random);  
 
-    // console.log($('#circle .balloon'));
 
     // 為容器內加 氣球svg
     for (i = 1; i < 19; i++) {
@@ -223,13 +213,13 @@
         Balloon('#circle')
         $('#circle .balloon').eq(i).css('transform', `rotate(${i * 36}deg)`)
 
-        console.log(i);
+        console.log(i); //結果為何有 8
         // console.log(`${i * 36}`);
         // console.log($('#circle .balloon').eq(i));
       } else if (i === 8) {
         $('#circle .balloon').eq(i).css()
         console.log(i);
-        // 第8個氣球上面 html 已經有寫一個，js不想重複出現
+        // 第8個氣球上面 html 已經有寫一個，js不想重複出現 -0421解決-把上面的刪掉
       }
 
     }
@@ -249,10 +239,10 @@
       // console.log($('#straight svg').length);
 
       // 沒辦法新增每個 balloon 的 marginBottom --想要隨機間距
-      $('#straight .track .balloon').eq(i).css({ marginBottom: `${random}px` })
-      console.log($('#straight .track .balloon').eq(i));
+      // $('#straight .track .balloon').eq(i).css({ marginBottom: `${random}px` })
+      // console.log($('#straight .track .balloon').eq(i));
 
-      $('#straight .track .balloon').eq(i).attr('data-svg', i)
+      // $('#straight .track .balloon').eq(i).attr('data-svg', i)
 
       console.log(`${random()}`);
 
@@ -263,78 +253,84 @@
 
     }
 
-    // 直走、橫走區 軌道隨機位移
-    timerTrack1 = setInterval(() => {
-      // console.log(`${random() * 45}`);
-      // 直走區
-      $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px` })
+    $('#start').click(function () {
+      $(this).attr('disabled', true)
 
-      // $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px`})
-      // 橫走區
-      // $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px`})
-      $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px` })
-    }, 500)
-    timerTrack2 = setInterval(() => {
-      // console.log(`${random() * 45}`);
-      // 直走區
-      // $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px`})
-      $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px` })
-      // 橫走區
-      $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px` })
-      // $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px`})
-    }, 1200)
+      // 直走、橫走區 軌道隨機位移
+      timerTrack1 = setInterval(() => {
+        // console.log(`${random() * 45}`);
+        // 直走區
+        $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px` })
+        // 嘗試隨機給每個 balloon 間距位移
+        for (i = 0; i < 10; i++) {
+          $('#straight .track .balloon').eq(i).css({ marginBottom: `${random}px` })
+        }
+        // $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px`})
+        // 橫走區
+        // $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px`})
+        $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px` })
+      }, 500)
+      timerTrack2 = setInterval(() => {
+        // console.log(`${random() * 45}`);
+        // 直走區
+        // $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px`})
+        $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px` })
+        // 橫走區
+        $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px` })
+        // $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px`})
+      }, 1200)
 
-    // 轉盤隨機角度變換
-    timer = setInterval(() => {
-      $('#circle').attr('style', `transform:rotate(${random() * 36}deg)`)
-      $('#circle-inside').attr('style', `transform:rotate(${random() * (-36)}deg)`)
+      // 轉盤隨機角度變換
+      timerCircle1 = setInterval(() => {
+        $('#circle-inside').attr('style', `transform:rotate(${random() * (-36)}deg)`)
+      }, 900)
+      timerCircle2 = setInterval(() => {
+        $('#circle').attr('style', `transform:rotate(${random() * 36}deg)`)
+      }, 1500)
 
-      // console.log(random * 36);
-    }, 900)
+      // 轉盤依照現在的秒數一直轉圈，缺點是60秒與1秒切換時，會轉回原點
+      // timer = setInterval(() => {
+      //   const sec = new Date().getSeconds()
+      //   // const deg = Math.floor(Math.random() * 10)   --好像不能用 random 會抽動
+      //   console.log(sec);
+      //   $('#circle').attr('style', `transform:rotate(${sec * 60}deg)`)
+      // }, 10)
 
-    // 轉盤依照現在的秒數一直轉圈，缺點是60秒與1秒切換時，會轉回原點
-    // timer = setInterval(() => {
-    //   const sec = new Date().getSeconds()
-    //   // const deg = Math.floor(Math.random() * 10)   --好像不能用 random 會抽動
-    //   console.log(sec);
-    //   $('#circle').attr('style', `transform:rotate(${sec * 60}deg)`)
-    // }, 10)
+      // 使用 jqueryrotate 轉圈--沒辦法轉完一整圈
+      // https://raw.githubusercontent.com/wilq32/jqueryrotate/master/jQueryRotate.js
+      // https://jqueryrotate.com/
 
-    // 使用 jqueryrotate 轉圈--沒辦法轉完一整圈
-    // https://raw.githubusercontent.com/wilq32/jqueryrotate/master/jQueryRotate.js
-    // https://jqueryrotate.com/
+      // var angle = 0;
+      // setInterval(function () {
+      //   angle += 3;
+      //   $("#circle").rotate(angle);
+      //   console.log(angle);
+      // }, 100);
 
-    // var angle = 0;
-    // setInterval(function () {
-    //   angle += 3;
-    //   $("#circle").rotate(angle);
-    //   console.log(angle);
-    // }, 100);
+      // var rotation = function () {
+      //   $('#circle').rotate({
+      //     angle: 0,
+      //     animateTo: 360,
+      //     callback: rotation
+      //   })
+      // }
+      // rotation();
 
-    // var rotation = function () {
-    //   $('#circle').rotate({
-    //     angle: 0,
-    //     animateTo: 360,
-    //     callback: rotation
-    //   })
-    // }
-    // rotation();
-
-    // https://www.jq22.com/jquery-info375
-    // var rotation2 = function () {
-    //   $('#circle').rotate({
-    //     angle: 0,//初始旋轉的角度數，並且立即執行
-    //     animateTo: 360,
-    //     duration: 8000,//指定使用animateTo的動畫執行持續時間
-    //     callback: rotation2,
-    //     easing: function (x, t, b, c, d) {
-    //       // t: current time, b: begInnIng value, c: change In value, d: duration
-    //       return c * (t / d) + b;
-    //     }
-    //   });
-    // }
-    // rotation2();
-
+      // https://www.jq22.com/jquery-info375
+      // var rotation2 = function () {
+      //   $('#circle').rotate({
+      //     angle: 0,//初始旋轉的角度數，並且立即執行
+      //     animateTo: 360,
+      //     duration: 8000,//指定使用animateTo的動畫執行持續時間
+      //     callback: rotation2,
+      //     easing: function (x, t, b, c, d) {
+      //       // t: current time, b: begInnIng value, c: change In value, d: duration
+      //       return c * (t / d) + b;
+      //     }
+      //   });
+      // }
+      // rotation2();
+    })
 
 
 
