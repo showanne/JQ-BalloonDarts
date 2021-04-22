@@ -189,7 +189,6 @@
     }
     // console.log(random);  
 
-
     // 圓區 加 氣球svg
     for (i = 0; i < 21; i++) {
       if (i > 10) {
@@ -230,25 +229,6 @@
       Balloon('#horizontal .track')
     }
 
-    // 嘗試隨機給每個 balloon 間距位移
-    timerTrackBalloon = setInterval(() => {
-      for (i = 0; i < 20; i++) {
-        random()
-        // 直走區內氣球隨機間距
-        $('#straight .track .balloon').eq(i).css({ marginBottom: `${random() * 5}px` })
-        // console.log(i);
-        // console.log($('#straight .track .balloon').eq(i))
-
-        // 橫走區內氣球隨機間距 --有出現但無效
-        $('#horizontal .track .balloon').eq(i).css({
-          width: '60px',
-          height: '60px',
-          marginRight: `${random() * 5}px`
-        })
-      }
-    }, 2000)
-
-
     $('#start').click(function () {
       $(this).attr('disabled', true)
 
@@ -265,6 +245,21 @@
         // 橫走區
         $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px` })
       }, 1200)
+
+      // 隨機給每個 balloon 間距位移
+      timerTrackBalloon = setInterval(() => {
+        for (i = 0; i < 20; i++) {
+          random()
+          // 直走區內氣球隨機間距
+          $('#straight .track .balloon').eq(i).css({ marginBottom: `${random() * 5}px` })
+          // console.log(i);
+
+          // 橫走區內氣球隨機間距
+          $('#horizontal .track .balloon').eq(i).css({
+            marginRight: `${random() * 5}px`
+          })
+        }
+      }, 2000)
 
       // 轉盤隨機角度變換
       timerCircleL = setInterval(() => {
@@ -323,10 +318,10 @@
     })
 
 
-
     // fill="#5b5b5b"  svg顏色隨機
     // 轉圈使用 jqueryrotate 沒辦法轉完一整圈
 
+    // 分解gif  https://dribbble.com/shots/3388942-Water-drop
   </script>
 </body>
 
