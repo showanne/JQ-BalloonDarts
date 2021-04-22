@@ -51,7 +51,6 @@
       height: 60px;
     }
 
-
     .circleM {
       display: block;
 
@@ -142,13 +141,19 @@
       width: 900px;
       margin: 1.5px 0;
       background-color: seagreen;
+      /* display: flex; */
+      /* flex-wrap: nowrap; */
+    }
+
+    #horizontal .track .balloon {
+      display: inline-block;
     }
 
     #horizontal .track svg {
       width: 60px;
       height: 60px;
       margin: 0 5px;
-      float: left;
+      /* float: left; */
       /* 為什麼要用 float ，明明純 css 排版時可以自己排成一橫排 */
     }
   </style>
@@ -246,18 +251,8 @@
 
       // 直走區
       Balloon('#straight .track')
-
-      $('#straight .track svg').eq(i).css({
-        // transform: `rotate(${i * 36}deg)`,
-        // marginTop: `${random() * 45} px`,
-        // marginBottom: `${random() * 30} px`,
-        marginTop: `${random() * 10}px`
-      }
-      )
       // $('#straight .track .balloon').eq(i).attr('data-svg', i)
-
       console.log(`${random()}`);
-
 
       // 橫走區
       Balloon('#horizontal .track')
@@ -273,11 +268,13 @@
         // console.log($('#straight .track .balloon').eq(i))
 
         // 橫走區內氣球隨機間距 --有出現但無效
-        $('#horizontal .track .balloon').eq(i).css({ marginRight: `${random() * 5}px` })
+        $('#horizontal .track .balloon').eq(i).css({
+          width: '60px',
+          height: '60px',
+          marginRight: `${random() * 5}px`
+        })
       }
     }, 2000)
-
-
 
 
     $('#start').click(function () {
@@ -287,46 +284,28 @@
       timerTrack1 = setInterval(() => {
         // 直走區
         $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px` })
-        // $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px`})
         // 橫走區
-        // $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px`})
         $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px` })
       }, 500)
       timerTrack2 = setInterval(() => {
         // 直走區
-        // $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px`})
         $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px` })
         // 橫走區
         $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px` })
-        // $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px`})
       }, 1200)
 
       // 轉盤隨機角度變換
-      // timerCircle1 = setInterval(() => {
-      //   for (i = 0; i < 21; i++) {
-      //     random()
-      //     if (i < 10) {
-      //       // 轉盤區 - 大圓(0~9) 共10顆
-      //       $('#circle .balloon').eq(i).attr('style', `transform:rotate(${random() * 36}deg)`)
-      //       console.log(i);
-      //     } else if (i > 9 && i < 18) {
-      //       // 轉盤區 - 中圓(10~17) 共8顆
-      //       $('#circle .balloon').eq(i).attr('style', `transform:rotate(${random() * 19}deg)`)
-      //     } else {
-      //       // 轉盤區 - 小圓(18~20) 共3顆
-      //       $('#circle .balloon').eq(i).attr('style', `transform:rotate(${random() * -26}deg)`)
-      //     }
-      //   }
-      // }, 900)
       timerCircleL = setInterval(() => {
         $('.circleL').attr('style', `transform:rotate(${random() * 36}deg)`)
-      }, 1500)
+      }, 900)
       timerCircleM = setInterval(() => {
         $('.circleM').attr('style', `transform:rotate(-${random() * 36}deg)`)
       }, 1500)
       timerCircleS = setInterval(() => {
         $('.circleS').attr('style', `transform:rotate(${random() * 36}deg)`)
       }, 1200)
+
+
       // 轉盤依照現在的秒數一直轉圈，缺點是60秒與1秒切換時，會轉回原點
       // timer = setInterval(() => {
       //   const sec = new Date().getSeconds()
