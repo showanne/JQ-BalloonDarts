@@ -7,9 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Balloon Darts</title>
   <style>
-    /* body {
-      cursor: url(./cursor-+.png) 50 50, auto;
-    } */
+    body {
+      /* cursor: url(./cursor-+.png) 50 50, auto;*/
+      background-image: url('./bg-cat.jpg');
+      background-position: right;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
 
     .inline {
       display: inline-block;
@@ -182,12 +186,31 @@
       /* float: left; */
       /* 因為現在是 div 會占滿一整排，所以排列起來會變一直排，若不想用 float ，也可以給父元素inline-block 就會變一橫排 */
     }
+
+    .dart {
+      display: inline-block;
+      width: 19px;
+      height: 39px;
+      background-color: orange;
+    }
   </style>
 </head>
 
 <body>
   <input type="button" value="開始" id="start">
-
+  <div id="life">
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+    <div class="dart"></div>
+  </div>
+  <div id="score">0</div>
   <div id="turntable">
     <!-- 10顆內隨機氣球 轉圓 -->
     <div id="circle" class="inline circleL">
@@ -329,7 +352,6 @@
         $('#circle .balloon .balloon-svg').eq(Random(0, 21)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
         // console.log(`${Random(0, 21)}`);
       }
-
       for (let i = 0; i < Random(8, 13); i++) {
         $('#straight .track .balloon .balloon-svg').eq(Random(0, 20)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
         // console.log(`rgb(${Random(0, 255)},${Random(0, 255)},${Random(0, 255)})`);
@@ -383,9 +405,19 @@
       // rotation2();
     })
 
+    // 先讓分數歸0
+    let score = 0
+    // 滑鼠按鍵事件
     $('#turntable').on('click', '.color', function () {
       $(this).addClass('bomb').fadeTo(1100, 0)
-      console.log(0);
+
+      if ($(this).hasClass('bomb')) {
+        // 如果按到正確的，就讓飛鏢消失一個
+        $('.dart').eq(0).remove()
+        // 且讓分數增加
+        score++
+        $('#score').text(score)
+      }
     })
 
 
@@ -395,9 +427,12 @@
     // 橫走區汽球移動時有的會疊在一起 -- 4/26 老師建議用 position
 
     // 待作效果
-    // 分解gif  https://dribbble.com/shots/3388942-Water-drop
-    // fill="#5b5b5b"  svg顏色隨機
-    // 設置飛鏢數量及倒數時間，並計算爆掉汽球顆數
+    // 分解gif  https://dribbble.com/shots/3388942-Water-drop  --ok
+    // fill="#5b5b5b"  svg顏色隨機  --ok
+    // 設置飛鏢，點按到正確的數量會減少 --ok
+    // 倒數時間
+    // 計算爆掉汽球顆數 --ok
+    // 設置增加飛鏢數量的事件
   </script>
 </body>
 
