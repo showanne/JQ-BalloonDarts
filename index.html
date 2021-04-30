@@ -8,12 +8,17 @@
   <title>Balloon Darts</title>
   <style>
     body {
-      padding: 100px 70px 70px 130px;
+      padding: 70px 70px 70px 222px;
       /* cursor: url(./cursor-+.png) 50 50, auto;*/
-      background-image: url('./images/halloween_carnival_balloon_darts.png');
+      background-image: url('./images/halloween_carnival_balloon_darts_new.jpg');
       background-position: left;
       background-repeat: no-repeat;
       background-size: contain;
+    }
+
+    #life,
+    #score {
+      margin: 9px auto;
     }
 
     .inline {
@@ -29,8 +34,8 @@
     }
 
     #turntable {
-      width: 706px;
-      height: 715px;
+      width: 730px;
+      height: 730px;
       /* background-color: paleturquoise; */
       overflow: hidden;
       cursor: url(./images/cursor-+.png) 50 50, auto;
@@ -59,11 +64,11 @@
       transform: rotate(180deg);
     }
 
-    .color {
-      /* fill: rgb(203, 250, 74); */
-      filter: hue-rotate(150deg);
-      /* background-image: url(./images/WaterDrop-6.gif); */
-    }
+    /* .color { 
+       fill: rgb(203, 250, 74); 
+       filter: hue-rotate(150deg); 
+       background-image: url(./images/WaterDrop-6.gif); 
+     } */
 
 
     .bomb {
@@ -141,18 +146,19 @@
 
     #straight {
       margin: 25px 25px 25px 0;
-      width: 125px;
+      width: 140px;
       height: 500px;
-      background-color: springgreen;
+      /* background-color: rgb(171, 95, 247); */
       overflow: hidden;
     }
 
     #straight .track {
-      background-color: goldenrod;
       width: 60px;
-      /* height: 800px; */
-      margin: 0 1.25px;
-
+      height: 800px;
+      margin: 0 5px;
+      background-image: url('./images/track2.jpg');
+      background-size: contain;
+      /* background-color: goldenrod; */
       /* display: inline-block; */
       float: right;
     }
@@ -164,22 +170,24 @@
     #horizontal {
       margin: 0 65px 25px 65px;
       width: 570px;
-      height: 140px;
-      background-color: sandybrown;
+      height: 152.5px;
+      /* background-color: rgb(171, 95, 247); */
       overflow: hidden;
     }
 
     #horizontal .track {
       height: 68px;
-      /* width: 900px; */
-      margin: 1.5px 0;
-      background-color: seagreen;
+      width: 900px;
+      margin: 5.5px 0;
+      background-image: url('./images/track.jpg');
+      background-size: contain;
+      /* background-color: seagreen; */
       /* display: flex; */
       /* flex-wrap: nowrap; */
     }
 
     #horizontal .track .balloon {
-      /* 為了隨機出現的效果，先暫時拿掉 */
+      /* 為了排成一橫排 */
       display: inline-block;
     }
 
@@ -212,22 +220,22 @@
     <div class="dart"></div>
     <div class="dart"></div>
   </div>
-  <div id="score">0</div>
+  <div id="score">獲得<span> - </span>分</div>
   <div id="turntable">
-    <!-- 10顆內隨機氣球 轉圓 -->
+    <!-- 圓區 -->
     <div id="circle" class="inline circleL">
       <div class="circleM">
         <div class="circleS"></div>
       </div>
     </div>
 
-    <!-- 5顆內隨機 直走 -->
+    <!-- 直走區 -->
     <div id="straight" class="inline">
       <div class="track"></div>
       <div class="track"></div>
     </div>
 
-    <!-- 5顆內隨機 橫走 -->
+    <!-- 橫走區 -->
     <div id="horizontal" class="inline">
       <div class="track"></div>
       <div class="track"></div>
@@ -294,7 +302,7 @@
     }
 
     // 直走、橫走區 加 氣球svg
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 8; i++) {
 
       // 直走區
       Balloon('#straight .track')
@@ -314,18 +322,18 @@
         // 直走區
         $('#straight .track').eq(0).css({ marginTop: `-${random() * 25}px` })
         // 橫走區
-        $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 35}px` })
-      }, 500)
+        $('#horizontal .track').eq(1).css({ marginLeft: `-${random() * 15}px` })
+      }, 3000)
       timerTrack2 = setInterval(() => {
         // 直走區
         $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px` })
         // 橫走區
-        $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 30}px` })
-      }, 1200)
+        $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 25}px` })
+      }, 2500)
 
       // 隨機給每個 直走、橫走區 balloon 間距位移
       timerTrackBalloon = setInterval(() => {
-        for (i = 0; i < 20; i++) {
+        for (i = 0; i < 16; i++) {
           random()
           // 直走區內氣球隨機間距
           $('#straight .track .balloon').eq(i).css({ marginBottom: `${random() * 5}px` })
@@ -341,26 +349,26 @@
       // 轉盤隨機角度變換
       timerCircleL = setInterval(() => {
         $('.circleL').attr('style', `transform:rotate(${random() * 36}deg)`)
-      }, 900)
+      }, 1500)
       timerCircleM = setInterval(() => {
         $('.circleM').attr('style', `transform:rotate(-${random() * 36}deg)`)
-      }, 1500)
+      }, 1900)
       timerCircleS = setInterval(() => {
         $('.circleS').attr('style', `transform:rotate(${random() * 36}deg)`)
       }, 1200)
 
       // 隨機顯示汽球
-      for (let i = 0; i < Random(9, 15); i++) {
-        $('#circle .balloon .balloon-svg').eq(Random(0, 21)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
+      for (let i = 0; i < Random(2, 5); i++) {
+        $('#circle .balloon .balloon-svg').eq(Random(0, 20)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
         // console.log(`${Random(0, 21)}`);
       }
-      for (let i = 0; i < Random(8, 13); i++) {
-        $('#straight .track .balloon .balloon-svg').eq(Random(0, 20)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
+      for (let i = 0; i < Random(2, 3); i++) {
+        $('#straight .track .balloon .balloon-svg').eq(Random(0, 15)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
         // console.log(`rgb(${Random(0, 255)},${Random(0, 255)},${Random(0, 255)})`);
-        // console.log(`${Random(0, 20)}`);
+        // console.log(`${Random(0, 15)}`);
 
-        $('#horizontal .track .balloon .balloon-svg').eq(Random(0, 20)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
-        // console.log(`${Random(0, 20)}`);
+        $('#horizontal .track .balloon .balloon-svg').eq(Random(0, 15)).addClass('color').css({ filter: `hue-rotate(${Random(0, 255)}deg)` })
+        // console.log(`${Random(0, 15)}`);
       }
 
       // 轉盤依照現在的秒數一直轉圈，缺點是60秒與1秒切換時，會轉回原點
