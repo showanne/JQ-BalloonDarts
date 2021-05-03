@@ -101,6 +101,7 @@
       width: 52.27px;
       height: 80.9px;
       background-image: url(./images/WaterDrop-9.gif);
+
     }
 
     #circle .balloon {
@@ -128,8 +129,8 @@
       height: 500px;
       border-radius: 50%;
 
-      background-color: rgb(171, 95, 247);
-      background-image: url('./images/wooden2.jpg');
+      /* background-color: rgb(171, 95, 247); */
+      background-image: url('./images/wooden.png');
       background-position: center;
       background-size: contain;
       transition: transform 2s;
@@ -146,7 +147,7 @@
       z-index: 9;
 
       /* background-color: rgba(0, 9, 128, 0.199); */
-      background-image: url('./images/wooden2.jpg');
+      background-image: url('./images/wooden.png');
       background-position: center;
       background-size: contain;
       /* display: block; */
@@ -165,7 +166,7 @@
       z-index: 19;
 
       /* background-color: rgb(138, 89, 253); */
-      background-image: url('./images/wooden2.jpg');
+      background-image: url('./images/wooden.png');
       background-position: center;
       background-size: contain;
       /* display: block; */
@@ -221,7 +222,7 @@
     }
 
     #horizontal .track .balloon-svg {
-      transform: rotate(45deg);
+      transform: rotate(10deg);
       /* float: left; */
       /* 因為現在是 div 會占滿一整排，所以排列起來會變一直排，若不想用 float ，也可以給父元素inline-block 就會變一橫排 */
     }
@@ -352,7 +353,7 @@
       }, 3000)
       timerTrack2 = setInterval(() => {
         // 直走區
-        $('#straight .track').eq(1).css({ marginTop: `-${random() * 40}px` })
+        $('#straight .track').eq(1).css({ marginTop: `-${random() * 20}px` })
         // 橫走區
         $('#horizontal .track').eq(0).css({ marginLeft: `-${random() * 5}px` })
       }, 2500)
@@ -444,13 +445,22 @@
     // 先讓分數歸0
     let score = 0
     // 滑鼠按鍵事件
-    $('#turntable').on('click', '.color', function () {
-      $(this).addClass('bomb').fadeTo(1100, 0)
+    $('#turntable').on('click', '.balloon-svg', function () {
+      $(this).addClass('bomb').attr('disabled', true).fadeTo(1100, 0)
 
+      // 按到任一氣球會
       if ($(this).hasClass('bomb')) {
-        // 如果按到正確的，就讓飛鏢消失一個
+        // 讓飛鏢消失一個
         $('.dart').eq(0).remove()
         // 且讓分數增加
+        score++
+        $('#score').text(score)
+      }
+      // 按到有顏色的氣球會
+      if ($(this).hasClass('color')) {
+        // 讓飛鏢消失一個
+        $('.dart').eq(0).remove()
+        // 且讓分數再加1分
         score++
         $('#score').text(score)
       }
@@ -470,6 +480,7 @@
     // 計算爆掉汽球顆數 --ok
     // 設置增加飛鏢數量的事件
     // 有開場歡迎動畫背景
+    // 飛鏢可以重複計分...
   </script>
 </body>
 
