@@ -18,7 +18,7 @@
       /* cursor: url(./cursor-+.png) 50 50, auto; */
     }
 
-    #container{
+    #container {
       width: 1085.6px;
       height: 1064.8px;
       background-image: url('./images/halloween_carnival_balloon_darts_new.jpg');
@@ -81,19 +81,28 @@
       width: 53.18px;
       height: 70px;
       filter: hue-rotate(197deg);
-      background-image: url(./images/WaterDrop-6.gif);
+      /* 顏色改橘色 */
+
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-
-      filter: drop-shadow(2px 2px 2px black);
 
       /* 不能被選取 */
       user-select: none;
       -webkit-user-drag: none;
     }
 
-/* 圓區 */
+    .balloon-img {
+      background-image: url(./images/WaterDrop-6.gif);
+
+      /* 加了之後水滴在轉動時會怪怪的抽動 */
+      /* filter: drop-shadow(2px 2px 2px black); */
+      /* 用 filter: drop-shadow() 可以沿著透明的部分作陰影
+          而不是像 box-shadow 一樣繞 div 外圍*/
+
+    }
+
+    /* 圓區 */
     #turntable {
       margin: 9px 0 0 175px;
       width: 730px;
@@ -178,11 +187,11 @@
       transform: rotate(180deg);
     }
 
-    /* .color { 
-       fill: rgb(203, 250, 74); 
-       filter: hue-rotate(150deg); 
-       background-image: url(./images/WaterDrop-6.gif); 
-     } */
+    .color {
+      /* fill: rgb(203, 250, 74);  */
+      filter: hue-rotate(150deg);
+      /* background-image: url(./images/WaterDrop-6.gif);  */
+    }
 
     .bomb {
       /* fill: rgb(250, 74, 156); */
@@ -194,7 +203,7 @@
 
     }
 
-/* 直走區 */
+    /* 直走區 */
     #straight {
       margin: 25px 25px 25px 0;
       width: 140px;
@@ -218,7 +227,7 @@
       transform: rotateX(30deg);
     }
 
-/* 橫走區 */
+    /* 橫走區 */
     #horizontal {
       margin: 33px 65px;
       width: 625px;
@@ -254,45 +263,45 @@
 <body>
   <div id="container">
 
-  <h1 id="title">Balloon Darts</h1>
+    <h1 id="title">Balloon Darts</h1>
 
-  <div class="float1">
-    <input type="button" value="開始" id="start">
-    <div id="life">
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
-      <div class="dart"></div>
+    <div class="float1">
+      <input type="button" value="開始" id="start">
+      <div id="life">
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+        <div class="dart"></div>
+      </div>
+      <div id="score">獲得&nbsp;<span> - </span>&nbsp;分</div>
     </div>
-    <div id="score">獲得&nbsp;<span> - </span>&nbsp;分</div>
-  </div>
 
-  <div id="turntable" class="float2">
-    <!-- 圓區 -->
-    <div id="circle" class="inline circleL">
-      <div class="circleM">
-        <div class="circleS"></div>
+    <div id="turntable" class="float2">
+      <!-- 圓區 -->
+      <div id="circle" class="inline circleL">
+        <div class="circleM">
+          <div class="circleS"></div>
+        </div>
+      </div>
+
+      <!-- 直走區 -->
+      <div id="straight" class="inline">
+        <div class="track"></div>
+        <div class="track"></div>
+      </div>
+
+      <!-- 橫走區 -->
+      <div id="horizontal" class="inline">
+        <div class="track"></div>
+        <div class="track"></div>
       </div>
     </div>
-
-    <!-- 直走區 -->
-    <div id="straight" class="inline">
-      <div class="track"></div>
-      <div class="track"></div>
-    </div>
-
-    <!-- 橫走區 -->
-    <div id="horizontal" class="inline">
-      <div class="track"></div>
-      <div class="track"></div>
-    </div>
-  </div>
 
   </div>
   <!-- jquery js -->
@@ -308,7 +317,7 @@
     const Balloon = (container) => {
       $(container).append(`
       <div class="balloon">
-      <div class="balloon-svg"></div>
+        <div class="balloon-svg balloon-img"></div>
       </div>`)
     }
 
@@ -470,9 +479,9 @@
     // 先讓分數歸0
     let score = 0
     // 滑鼠按鍵事件
-    $('#turntable').on('click', '.balloon-svg', function () {
-      // 改 replace
-      $(this).addClass('bomb').attr('disabled', true).fadeTo(900, 0)
+    $('#turntable').on('click', '.balloon-img', function () {
+      // 先移除原本的Class('balloon-img')避免一直加分，再新增消失動畫的Class('bomb')，最後讓整個動畫淡出
+      $(this).removeClass('balloon-img').addClass('bomb').fadeTo(900, 0)
 
       // 按到任一氣球會
       if ($(this).hasClass('bomb')) {
@@ -497,6 +506,7 @@
     // 轉圈使用 jqueryrotate 沒辦法轉完一整圈
     // 小圓及中圓內的汽球無法點擊，就算設$('#circle .balloon')也一樣 --4/26解決
     // 橫走區汽球移動時有的會疊在一起 -- 4/26 老師建議用 position
+     // 汽球可以重複計分... --5/5解決
 
     // 待作效果
     // 分解gif  https://dribbble.com/shots/3388942-Water-drop  --ok
@@ -506,7 +516,7 @@
     // 計算爆掉汽球顆數 --ok
     // 設置增加飛鏢數量的事件
     // 有開場歡迎動畫背景
-    // 飛鏢可以重複計分...
+
   </script>
 </body>
 
