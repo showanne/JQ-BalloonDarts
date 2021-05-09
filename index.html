@@ -388,12 +388,16 @@
   <!-- jquery js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+  <!-- sweetalert2  js-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
   <!-- jqueryrotate -->
   <!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
   <!-- <script src="./jQueryRotateCompressed.js"></script> -->
   <script>
 
+    // 開場動畫
     window.onload = () => {
       console.log('window onload');
       $('.imgW-L')
@@ -477,6 +481,7 @@
     for (let i = 0; i < 12; i++) {
       $('#life').append('<div class="dart"></div>')
     }
+    // console.log($('.dart').length);
 
     // 開始按鈕事件
     $('#start').click(function () {
@@ -536,6 +541,7 @@
         // console.log(`${Random(0, 15)}`);
       }
 
+
       // 轉盤依照現在的秒數一直轉圈，缺點是60秒與1秒切換時，會轉回原點
       // timer = setInterval(() => {
       //   const sec = new Date().getSeconds()
@@ -584,7 +590,7 @@
     let score = 0
     // 滑鼠按鍵事件
     $('#turntable').on('click', '.balloon-img', function () {
-      // 先移除原本的Class('balloon-img')避免一直加分，再新增消失動畫的Class('bomb')，最後讓整個動畫淡出
+      // 先移除原本的Class('balloon-img')避免一直加分，再新增消失動畫的 .bomb，最後讓整個動畫淡出
       $(this).removeClass('balloon-img').addClass('bomb').fadeTo(900, 0)
 
       // 按到任一氣球會
@@ -595,6 +601,7 @@
         score++
         $('#score span').text(score)
       }
+      // 這樣同時含 .bomb 及 .color 會加2分
       // 按到有顏色的氣球會
       if ($(this).hasClass('color')) {
         // 讓飛鏢消失一個
@@ -602,6 +609,27 @@
         // 且讓分數再加1分
         score++
         $('#score span').text(score)
+      }
+
+
+      // console.log($('.dart').length);
+      if ($('.dart').length <= 0) {
+        Swal.fire({
+          title: `恭喜獲得${score}分`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+
+        clearInterval(timerTrack1)
+        clearInterval(timerTrack2)
+        clearInterval(timerTrackBalloon)
+        clearInterval(timerCircleL)
+        clearInterval(timerCircleM)
+        clearInterval(timerCircleS)
       }
     })
 
@@ -619,11 +647,11 @@
     // 分解gif  https://dribbble.com/shots/3388942-Water-drop  --ok
     // fill="#5b5b5b"  svg顏色隨機  --ok
     // 設置飛鏢，點按到正確的氣球，飛鏢數量會減少 --ok
-    // 軌道區顏色調整
+    // 軌道區顏色調整 --ok
     // 倒數時間
     // 計算爆掉汽球顆數 --ok
     // 設置增加飛鏢數量的事件
-    // 有開場歡迎動畫背景，從中間掀開頁面
+    // 有開場歡迎動畫背景，從中間掀開頁面 --ok，效果待調整
     // 遊戲規則??
 
   </script>
