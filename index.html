@@ -15,12 +15,55 @@
     body {
       padding: 0;
       margin: 0;
+      overflow: hidden;
       /* cursor: url(./cursor-+.png) 50 50, auto; */
+    }
+
+    #wellcome {
+      width: 100%;
+      height: 100%;
+
+      position: fixed;
+      z-index: 99;
+      /* transition: opacity 10s; */
+
+      /* 設定子元素在 3D 空間內 */
+      transform-style: preserve-3d;
+      /* 父元素設定 3D 透視距離 */
+      perspective: 1000px;
+      /* 讓翻卡片有個慢慢翻過去的動畫 */
+      /* transition: transform 5s; */
+      /* 排版 */
+      /* float: left; */
+    }
+
+    #wellcome .imgW-L {
+      /* width: 445px; */
+      width: 49.44%;
+      float: left;
+      /* position: absolute; */
+      /* transform: rotateY(180deg); */
+      transform-origin: left top;
+      transition: transform 5s;
+
+    }
+
+    #wellcome .imgW-R {
+      /* width: 455px; */
+      width: 50.55%;
+      float: right;
+      /* position: absolute; */
+      /* transform: rotateY(180deg); */
+      transform-origin: right top;
+      transition: transform 5s;
+
     }
 
     #container {
       width: 1085.6px;
       height: 1064.8px;
+      margin: auto;
+
       background-image: url('./images/halloween_carnival_balloon_darts_new.jpg');
       background-position: left;
       background-repeat: no-repeat;
@@ -46,7 +89,7 @@
       font-size: 99px;
       letter-spacing: 5px;
       color: rgb(46, 33, 28);
-      margin: 9px 65px 9px 0;
+      margin: 0px 65px 9px 0;
     }
 
     #info {
@@ -107,8 +150,6 @@
       background-color: orange;
     }
 
-<<<<<<< Updated upstream
-=======
     #score {
       width: 150px;
       margin: 9px;
@@ -116,7 +157,6 @@
       text-align: center;
     }
 
->>>>>>> Stashed changes
     .balloon-svg {
       /* width: 60px;
       height: 60px; */
@@ -149,12 +189,8 @@
 
     /* 圓區 */
     #turntable {
-<<<<<<< Updated upstream
-      margin: 9px 0 0 175px;
-=======
       float: right;
       margin: 10px 0;
->>>>>>> Stashed changes
       width: 730px;
       height: 730px;
       /* background-color: paleturquoise; */
@@ -313,30 +349,14 @@
 </head>
 
 <body>
+  <div id="wellcome">
+    <img src="./images/Halloween-Carnival_01.gif" class="imgW-L">
+    <img src="./images/Halloween-Carnival_02.gif" class="imgW-R">
+  </div>
   <div id="container">
 
     <h1 id="title">Balloon Darts</h1>
 
-<<<<<<< Updated upstream
-    <div class="float1">
-      <input type="button" value="開始" id="start">
-      <div id="life">
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-        <div class="dart"></div>
-      </div>
-      <div id="score">獲得&nbsp;<span> - </span>&nbsp;分</div>
-    </div>
-
-    <div id="turntable" class="float2">
-=======
     <div id="info">
       <input type="button" value="開始" id="start">
       <div id="life"></div>
@@ -344,7 +364,6 @@
     </div>
 
     <div id="turntable" class="">
->>>>>>> Stashed changes
       <!-- 圓區 -->
       <div id="circle" class="inline circleL">
         <div class="circleM">
@@ -374,6 +393,24 @@
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
   <!-- <script src="./jQueryRotateCompressed.js"></script> -->
   <script>
+
+    window.onload = () => {
+      console.log('window onload');
+      $('.imgW-L')
+        .animate({
+          width: '39%',
+          height: '39%'
+        }, 2000)
+        .css('transform', 'rotate3d(1,1,1,120deg)')
+
+      $('.imgW-R').css('transform', ' rotateY(180deg)')
+      setTimeout(() => {
+        $('#wellcome').css('display', 'none')
+        // $('.imgW-R').css('display', 'none')
+        $('body').css('overflow', 'unset')
+      }, 5000);
+      // ↑ 跟著前面 transition 的秒數
+    }
 
     // 將氣球svg成變數，方便隨時呼叫
     const Balloon = (container) => {
@@ -573,14 +610,10 @@
     // 轉圈使用 jqueryrotate 沒辦法轉完一整圈
     // 小圓及中圓內的汽球無法點擊，就算設$('#circle .balloon')也一樣 --4/26解決
     // 橫走區汽球移動時有的會疊在一起 -- 4/26 老師建議用 position
-<<<<<<< Updated upstream
-     // 汽球可以重複計分... --5/5解決
-=======
     // 汽球可以重複計分... --5/5解決
     // 圓圈區旋轉有時好像會一起旋轉
     // 判斷圓圈區旋轉角度下次與這次相差在一個範圍，不要一次轉太多
 
->>>>>>> Stashed changes
 
     // 待作效果
     // 分解gif  https://dribbble.com/shots/3388942-Water-drop  --ok
@@ -590,12 +623,8 @@
     // 倒數時間
     // 計算爆掉汽球顆數 --ok
     // 設置增加飛鏢數量的事件
-<<<<<<< Updated upstream
-    // 有開場歡迎動畫背景
-=======
     // 有開場歡迎動畫背景，從中間掀開頁面
     // 遊戲規則??
->>>>>>> Stashed changes
 
   </script>
 </body>
