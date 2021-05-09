@@ -44,7 +44,7 @@
       /* position: absolute; */
       /* transform: rotateY(180deg); */
       transform-origin: left top;
-      transition: transform 5s;
+      transition: transform 3s;
 
     }
 
@@ -55,7 +55,7 @@
       /* position: absolute; */
       /* transform: rotateY(180deg); */
       transform-origin: right top;
-      transition: transform 5s;
+      transition: transform 3s;
 
     }
 
@@ -400,19 +400,18 @@
     // 開場動畫
     window.onload = () => {
       console.log('window onload');
-      $('.imgW-L')
-        .animate({
-          width: '39%',
-          height: '39%'
-        }, 2000)
-        .css('transform', 'rotate3d(1,1,1,120deg)')
-
+      // $('.imgW-L')
+      //   .animate({
+      //     width: '39%',
+      //     height: '39%'
+      //   }, 2000)
+      // .css('transform', 'rotate3d(1,1,1,120deg)')
+      $('.imgW-L').css('transform', ' rotateY(-180deg)')
       $('.imgW-R').css('transform', ' rotateY(180deg)')
       setTimeout(() => {
         $('#wellcome').css('display', 'none')
-        // $('.imgW-R').css('display', 'none')
         $('body').css('overflow', 'unset')
-      }, 5000);
+      }, 3000);
       // ↑ 跟著前面 transition 的秒數
     }
 
@@ -424,10 +423,6 @@
       </div>`)
     }
 
-    // <svg class="balloon-svg" data-name="balloon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.54 377.24"><path d="M285,118C273,50.4,212.82.58,143.91,0c-8.59.91-17.28,1.24-25.74,2.81C46.34,16.1-4.58,81.17.33,153.29Q4,207.42,42,245.77c29.16,29.5,58.62,58.72,88,88,9,9,18.54,8.94,27.53,0,29.34-29.32,59-58.35,87.92-88.08C280.18,210,293.69,167.17,285,118Z" />
-    //     <path d="M149.28,348.54c-3.3-4.32-6.84-4.38-10.12-.1-5,6.45-9.88,12.94-14.54,19.6-1.08,1.54-2,4.43-1.26,5.68.95,1.59,3.58,2.84,5.6,3,4.95.42,10,.14,14.94.14,5.15,0,10.32.27,15.44-.14,2-.16,4.6-1.41,5.59-3,.76-1.21,0-4.12-1.09-5.61C159.18,361.46,154.22,355,149.28,348.54Z" />
-    //     </svg>
-
     // 隨機 1~10 數字
     const random = () => {
       return Math.floor(Math.random() * 10) + 1
@@ -437,56 +432,61 @@
       return Math.floor(Math.random() * R) + r
     }
 
-    // 圓區 加 氣球svg
-    for (i = 0; i < 21; i++) {
-      if (i > 10) {
-        // 轉盤區 - 大圓(11~20) 共10顆
-        Balloon('#circle')
-        $('#circle .balloon').eq(i).css('transform', `rotate(${i * 36}deg)`)
-      } else if (i >= 3 && i <= 10) {
-        // 轉盤區 - 中圓(3~10) 共8顆
-        Balloon(' .circleM')
-        $('#circle .balloon').eq(i).css({
-          transform: `rotate(${i * 45 + 19}deg)`,
-          height: '160px',
-          // backgroundColor: 'rgba(255, 255, 0, 0.425)',
-        })
-        // console.log(i);
-        // 正確寫法為(#circle .balloon)，而不能用(.circleM .balloon)及(#circle .circleM .balloon)，因為是後來添加的，所以會呼叫不到
-      } else {
-        // 轉盤區 - 小圓(0~2) 共3顆
-        Balloon('.circleS')
-        $('#circle .balloon').eq(i).css({
-          transform: `rotate(${i * 119}deg)`,
-          height: '70px',
-          // backgroundColor: 'rgba(255, 255, 0, 0.425)',
-        })
-        // console.log(i);
+    function add() {
+      // 圓區 加 氣球svg
+      for (i = 0; i < 21; i++) {
+        if (i > 10) {
+          // 轉盤區 - 大圓(11~20) 共10顆
+          Balloon('#circle')
+          $('#circle .balloon').eq(i).css('transform', `rotate(${i * 36}deg)`)
+        } else if (i >= 3 && i <= 10) {
+          // 轉盤區 - 中圓(3~10) 共8顆
+          Balloon(' .circleM')
+          $('#circle .balloon').eq(i).css({
+            transform: `rotate(${i * 45 + 19}deg)`,
+            height: '160px',
+            // backgroundColor: 'rgba(255, 255, 0, 0.425)',
+          })
+          // console.log(i);
+          // 正確寫法為(#circle .balloon)，而不能用(.circleM .balloon)及(#circle .circleM .balloon)，因為是後來添加的，所以會呼叫不到
+        } else {
+          // 轉盤區 - 小圓(0~2) 共3顆
+          Balloon('.circleS')
+          $('#circle .balloon').eq(i).css({
+            transform: `rotate(${i * 119}deg)`,
+            height: '70px',
+            // backgroundColor: 'rgba(255, 255, 0, 0.425)',
+          })
+          // console.log(i);
+        }
       }
+
+      // 直走、橫走區 加 氣球svg
+      for (i = 0; i < 8; i++) {
+
+        // 直走區
+        Balloon('#straight .track')
+        // $('#straight .track .balloon').eq(i).attr('data-svg', i)
+        // console.log(`${random()}`);
+
+        // 橫走區
+        Balloon('#horizontal .track')
+      }
+
+      // 生命區 加 飛鏢
+      for (let i = 0; i < 12; i++) {
+        $('#life').append('<div class="dart"></div>')
+      }
+      // console.log($('.dart').length);
     }
 
-    // 直走、橫走區 加 氣球svg
-    for (i = 0; i < 8; i++) {
-
-      // 直走區
-      Balloon('#straight .track')
-      // $('#straight .track .balloon').eq(i).attr('data-svg', i)
-      // console.log(`${random()}`);
-
-      // 橫走區
-      Balloon('#horizontal .track')
-    }
-
-    // 生命區 加 飛鏢
-    for (let i = 0; i < 12; i++) {
-      $('#life').append('<div class="dart"></div>')
-    }
-    // console.log($('.dart').length);
 
     // 開始按鈕事件
     $('#start').click(function () {
       $(this).attr('disabled', true)
 
+      // 加氣球、生命
+      add()
       // 直走、橫走區 軌道隨機位移
       timerTrack1 = setInterval(() => {
         // 直走區
@@ -604,14 +604,12 @@
       // 這樣同時含 .bomb 及 .color 會加2分
       // 按到有顏色的氣球會
       if ($(this).hasClass('color')) {
-        // 讓飛鏢消失一個
-        $('.dart').eq(0).remove()
-        // 且讓分數再加1分
+        // 讓分數再加1分
         score++
         $('#score span').text(score)
       }
 
-
+      // 當生命數量為 0 時，發生的事情
       // console.log($('.dart').length);
       if ($('.dart').length <= 0) {
         Swal.fire({
@@ -621,15 +619,23 @@
           },
           hideClass: {
             popup: 'animate__animated animate__fadeOutUp'
-          }
-        })
+          },
+          allowOutsideClick: false,
+          // showCancelButton: true,
+          confirmButtonText: '繼續玩 ^^',
+          // showLoaderOnConfirm: true,
 
-        clearInterval(timerTrack1)
-        clearInterval(timerTrack2)
-        clearInterval(timerTrackBalloon)
-        clearInterval(timerCircleL)
-        clearInterval(timerCircleM)
-        clearInterval(timerCircleS)
+          timer: 3000,
+          timerProgressBar: true,
+        }).then((result) => {
+
+          // 開始按鈕結束遊戲後可以被點擊
+          // $('#start').attr('disabled', false)
+
+
+          // 每次結束後，都重新整理
+          window.location.reload();
+        })
       }
     })
 
